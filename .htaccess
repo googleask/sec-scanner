@@ -1,0 +1,12 @@
+<IfModule mod_rewrite.c>
+# calls to initiate our requests Apache's Rewrite Module (you need this only once)
+RewriteEngine on
+
+# "If the requests does not point to an existing file"
+RewriteCond %{REQUEST_FILENAME} !-f
+# "If the requests does not point to an existing folder"
+RewriteCond %{REQUEST_FILENAME} !-d
+# "If the request contains a "2 subfolders" structure, redirects it silently to ..."
+RewriteRule ^([^/]+)/([^/]+)/?$ index.php?method=$1&action=$2 [NC,QSA,L]
+RewriteRule ^([^/]+)/?$ index.php?method=$1 [NC,QSA,L]
+</IfModule>
