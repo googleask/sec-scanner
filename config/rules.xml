@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules>
+  
+    <rule>
+        <regex><![CDATA[((^system|.*[\ .]+system)\(.*(?<!escapeshellarg\()[\$][_](GET|POST|REQUEST|COOKIE).*\))]]></regex>
+        <name>RCE - system()</name>
+
+    </rule>
+    <rule>
+        <regex><![CDATA[((^exec|.*[\ .]+exec)\(.*(?<!escapeshellarg\()[\$][_](GET|POST|REQUEST|COOKIE).*\))]]></regex>
+        <name>RCE - exec()</name>
+       
+    </rule>
+    <rule>
+        <regex><![CDATA[((^popen|.*[\ .]+popen)\(.*(?<!escapeshellarg\()[\$][_](GET|POST|REQUEST|COOKIE).*\))]]></regex>
+        <name>RCE - popen()</name>
+       
+    </rule>
+    <rule>
+        <regex><![CDATA[((^shell_exec|.*[\ .]+shell_exec)\(.*(?<!escapeshellarg\()[\$][_](GET|POST|REQUEST|COOKIE).*\))]]></regex>
+        <name>RCE - shell_exec()</name>
+     
+    </rule>
+    <rule>
+        <regex><![CDATA[((^pcntl_exec|.*[\ .]+pcntl_exec)\(.*(?<!escapeshellarg\()[\$][_](GET|POST|REQUEST|COOKIE).*\))]]></regex>
+        <name>RCE - pcntl_exec()</name>
+       
+    </rule>
+
+    <rule>
+        <regex><![CDATA[((^eval|.*[\ .]+eval)\(.*[\$][_](GET|POST|REQUEST|COOKIE).*\))]]></regex>
+        <name>EVAL - eval()</name>
+        
+    </rule>
+    <rule>
+        <regex><![CDATA[((^unserialize|.*[\ .]+unserialize)\(.*[\$][_](GET|POST|REQUEST|COOKIE).*\))]]></regex>
+        <name>PHP Object Injection</name>
+      
+    </rule>
+    <rule>
+        <regex><![CDATA[((^passthru|.*[\ .]+passthru)\(.*[\$][_](GET|POST|REQUEST|COOKIE).*\))]]></regex>
+        <name>EVAL - passthru()</name>
+
+    </rule>
+
+    <rule>
+        <regex><![CDATA[((^phpinfo|.*[\ .]+phpinfo)\(.*\))]]></regex>
+        <name>INFO - phpinfo()</name>
+
+    </rule>
+        <rule>
+            <regex><![CDATA[((^var_dump|.*[\ .]+var_dump)\(.*\))]]></regex>
+            <name>INFO - var_dump()</name>
+        </rule>
+
+    <rule>
+        <regex><![CDATA[((^include|.*[\ .]+include).*[\$][_](GET|POST|REQUEST|COOKIE).*)]]></regex>
+        <name>LFI/RFI- include</name>
+       
+    </rule>
+    <rule>
+        <regex><![CDATA[((^require|.*[\ .]+require).*[\$][_](GET|POST|REQUEST|COOKIE).*)]]></regex>
+        <name>LFI/RFI- require()</name>
+       
+    </rule>
+
+ 
+    <rule>
+        <regex><![CDATA[/(^echo[\s.]|.*[\s.]+echo[\s.]|^echo).*(?<![a-zA-Z0-9_]\()([\$][_](GET|POST|REQUEST|COOKIE|SERVER\[["|\'](HTTP_USER_AGENT|HTTP_REFERER|REQUEST_URI)["|\']\])).*/iu]]></regex>
+        <name>XSS na ECHO</name>
+    </rule>
+
+
+    <rule>
+        <regex><![CDATA[/(^print[\s.]|.*[\s.]+print[\s.]|^print).*(?<![a-zA-Z0-9_]\()([\$][_](GET|POST|REQUEST|COOKIE|SERVER\[["|\'](HTTP_USER_AGENT|HTTP_REFERER|REQUEST_URI)["|\']\])).*/iu]]></regex>
+        <name>XSS na PRINT</name>
+
+    </rule>
+
+
+    <rule>
+        <regex><![CDATA[/.*(("|\')([\s]|)(SELECT|INSERT|UPDATE|DELETE).*=([\s]|)("|\')("|\').(([\$][_](GET|POST|REQUEST|SESSION|COOKIE|SERVER).*)).("|\'))("|\').*/iu]]></regex>
+        <name>SQL INJECTION</name>
+
+    </rule>
+
+</rules>

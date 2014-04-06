@@ -18,11 +18,46 @@ Class Files {
     'application/gzip',
   );
 
-  public function __construct($file) {
+
+  public function __construct($file = array()) {
     $this->file = $file;
   }
 
 
+
+  /**
+   * Get all files from directory and set it on $files variable
+   * @param $directory
+   * @return array
+   */
+  public function getAllFilesFromDirectory($directory){
+    $result = array();
+    if (is_dir($directory)) {
+      $root = scandir($directory);
+      foreach ($root as $value) {
+        if ($value === '.' || $value === '..' || $value === '.svn') {
+          continue;
+        }
+        if (is_file("$directory/$value")) {
+          $result[] = "$directory/$value";
+          continue;
+        }
+        foreach ($this->getAllFilesFromDirectory("$directory/$value") as $value) {
+          // Check if file is in mime type list
+          if ($this->validateFile($value)) {
+            $result[] = $value;
+          }
+
+        }
+      }
+    }
+    return $result;
+  }
+
+  /**
+   * Main method to manage uploaded file
+   * @return bool|destination
+   */
   public function manageUploadedFile() {
     if ($this->validateExtension() and $this->validateMimetype()) {
 
@@ -43,6 +78,13 @@ Class Files {
       return $destination;
     }
     return FALSE;
+  }
+
+  /*
+   * Get extension of  file
+   */
+  public function getExtension($file) {
+    return pathinfo($file, PATHINFO_EXTENSION);
   }
 
   /**
@@ -105,12 +147,7 @@ Class Files {
     }
   }
 
-  /*
-   * Get extension of uploaded file
-   */
-  private function getExtension() {
-    return pathinfo($this->file['name'], PATHINFO_EXTENSION);
-  }
+
 
   /*
    * Validate is mimetype of file is in allowed list
@@ -126,10 +163,27 @@ Class Files {
    * Validate is extension of file is in allowed list
    */
   private function validateExtension() {
-    if (in_array($this->getExtension(), $this->extensions)) {
+    if (in_array($this->getExtension($this->file['name']), $this->extensions)) {
       return TRUE;
     }
     return FALSE;
   }
+
+
+
+/**
+ * Get extension of file and check if file is in mime type list
+ * return TRUE - file is in list
+ * return FALSE - fle is not in list
+ * @param $file
+ */
+private function validateFile($file) {
+  $extension = pathinfo($file, PATHINFO_EXTENSION);
+  $list = json_decode(FILE_TYPES);
+  if (in_array($extension,$list)) {
+    return TRUE;
+  }
+  return FALSE;
+}
 
 }

@@ -82,13 +82,42 @@ Class Controller {
   public function project($project_id) {
     //Load project info
     $project = $this->db->getProjectInfo($project_id);
-    //Check if project were scanned and set the message
-    $project['project_scanned'] = '';
-    if ($project['project_scanned'] == 0) {
-      $project['project_scanned'] = '<a href="/scan/' . $project_id . '"><span class="button">Your project didn\'t scanned yet. <br><strong>Click here to perform new scan</strong><br>Get popcorn and enjoy fun.</span></a>';
+    $reports = $this->db->getReportsInfo($project_id);
+    //Check is project exists
+    if (empty($project['project_id'])) {
+      header("Location: /");
+      die();
     }
+    //Check if project were scanned and set the message
+    $project['project_scanned_message'] = '';
+    switch ($project['project_scanned']) {
+      case 0:
+        $project['project_scanned_message'] = '<a href="/scan/' . $project_id . '"><span class="button">Your project didn\'t scanned yet. <br><strong>Click here to perform new scan</strong><br>Get popcorn and enjoy fun.</span></a>';
+        break;
+      case 2:
+        $project['project_scanned_message'] = '<span class="button warning_button">Your project is scanned now <br>Please, come back later ;-)</span>';
+        break;
+    }
+
     //Load template
     $project_template = new Views('templates/project.tpl.php');
+
+    // Add reports to template
+    $project_template->set('project_reports',"
+<div class=\"infobox\"><h3>Sooo nice ;-)</h3><p>Scanner didn't found anything. So your project is sooo secure. You are security mastah, or the filters are too weak ;-) Anyway, I recommend to do a manual code review, to be 100% sure ;-)</p></div>");
+    if ($reports) {
+      foreach ($reports as $id => $reports_list) {
+        $reports_table = new Views('templates/report_box.tpl.php');
+        foreach ($reports_list as $key => $value) {
+          $reports_table->set($key, $value);
+        }
+        $reports_data[$id] = $reports_table;
+      }
+      // Prepare index page and merge reports into one file
+      $reports_contest = Views::merge($reports_data);
+      $project_template->set('project_reports', $reports_contest);
+    }
+
     foreach ($project as $key => $value) {
       $project_template->set($key, $value);
     }
@@ -102,7 +131,7 @@ Class Controller {
    * Scan project page, here the magic begins ;-)
    * @param $project_id
    */
-  public function scan($project_id){
+  public function scan($project_id) {
 
     //Load scanner template
     $scanner = new Views('templates/scanner.tpl.php');
@@ -110,19 +139,39 @@ Class Controller {
     $project = $this->db->getProjectInfo($project_id);
 
     foreach ($project as $key => $value) {
-     $scanner->set($key, $value);
+      $scanner->set($key, $value);
     }
-    $scanner->set('project_id',$project_id);
+    $scanner->set('project_id', $project_id);
     $scanner->set('header', $scanner->addHeader());
     $scanner->set('footer', $scanner->addFooter());
 
     return $scanner->render();
   }
 
-
-  public function scanAjax($project_id){
+  /*
+   * Scan Ajax page, perform scanning
+   */
+  public function scanAjax($project_id) {
     $scanner = new Scanner($project_id);
     $scanner->initScan();
   }
 
+
+  public function report($report_file_signature){
+    $reports = $this->db->getReports($report_file_signature);
+    $project = $this->db->getProjectInfo($reports[0]['project_id']);
+    $file_name = $reports[0]['report_file'];
+    $reports_template = new Views('templates/reports.tpl.php');
+    $reports_template->set('header', $reports_template->addHeader());
+    $reports_template->set('footer', $reports_template->addFooter());
+    $reports_template->set('file_name',$file_name);
+    foreach ($project as $key => $value) {
+      $reports_template->set($key, $value);
+    }
+
+    print $reports_template->render();
+
+
 }
+}
+
