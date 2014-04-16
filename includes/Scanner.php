@@ -41,7 +41,7 @@ Class Scanner {
           print "<div class=\"infobox\"><h3>WOW!</h3><p>Scanner didn't found anything. So your project is sooo secure. You are security mastah, or the filters are too weak ;-) Anyway, I recommend to do a manual code review, to be 100% sure ;-)</p></div>";
           break;
         case 'SCANNED':
-          print "<div class=\"infobox\"><h3>Hmmmm...</h3><p>Your project has been scanned before. Please go to project to check your reports. <br><a href=\"/show/" . $this->project_id . "\"><span class=\"button\">Go to project page</span></a></p></div>";
+          print "<div class=\"infobox\"><h3>Hmmmm...</h3><p>Your project has been scanned before. Please go to project to check your reports. <br><a href=\"/show/" . $this->project_id . "\" target=\"_parent\"><span class=\"button\">Go to project page</span></a></p></div>";
           break;
       }
       ob_flush();
@@ -116,6 +116,7 @@ Class Scanner {
               $report_id = $this->generateReportSignature($this->project_id, $file_name, $filter['name'], $lineNumber);
               //Add report
               $this->db->addReport($this->project_id, $report_id, $file_name, $extension, $filter['name'], $lineNumber, json_encode($code), $file_signature);
+              unset($code);
             }
           }
         }

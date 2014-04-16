@@ -1,9 +1,12 @@
 
 <div class="reportbox">
-  <h3>Reports: <span class="red">[@reports_count]</span></h3>
-  <p>[@report_file]<br>
-  <strong>[@report_file_signature]</strong><br>
 
+  <p><strong>File:</strong> [@report_file]<br>
+  <strong>Report ID:</strong> [@report_file_signature]<br>
+  <h3>Number of reports: <span class="red">[@reports_count]</span></h3>
+
+    <div class="center">
   <a href="/report/[@report_file_signature]"><span class="button">Go to report</span></a>
+  </div>
   </p>
 </div>

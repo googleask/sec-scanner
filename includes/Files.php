@@ -60,7 +60,6 @@ Class Files {
    */
   public function manageUploadedFile() {
     if ($this->validateExtension() and $this->validateMimetype()) {
-
       switch ($this->file['type']) {
         case 'application/x-tar':
         case 'application/x-tgz':
@@ -113,7 +112,7 @@ Class Files {
       //It have to be copied into /tmp directory because Phar doesn't recognize non-tar filenames
       move_uploaded_file($this->file['tmp_name'], $file);
       $tar = new PharData($file);
-      $tar->extractTo(DESTINATION . '/' . $this->file['name'] . '/');
+      $tar->extractTo(DESTINATION . '/' . $this->file['name'],null,true);
 
       //Remove temporary files
       unlink($file);

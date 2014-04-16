@@ -25,7 +25,7 @@ CREATE  TABLE IF NOT EXISTS `reports` (
   `project_id` INT UNSIGNED NOT NULL ,
   `report_file` VARCHAR(128) NOT NULL ,
   `report_language` VARCHAR(12) NOT NULL ,
-  `report_type` VARCHAR(12) NOT NULL ,
+  `report_type` VARCHAR(32) NOT NULL ,
   `report_line` INT NOT NULL ,
   `report_code` TEXT NOT NULL ,
   `report_false` TINYINT(1) NOT NULL DEFAULT 0 ,

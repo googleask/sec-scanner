@@ -289,6 +289,7 @@
 		font-weight: 400;
 		font-size: 1.2em;
 		color: #FFF;
+        text-align: center;
 	}
 
     .error_button{
@@ -680,12 +681,16 @@
     .reportbox{
         float:left;
         background: #FFFFFF;
-        width: 282px;
+        width: 700px;
         margin-right: 35px;
         padding: 40px;
         margin-bottom:25px;
+        text-align: left;
     }
 
   .reportbox p{
       overflow:hidden;
+  }
+  .center{
+      text-align: center;
   }
