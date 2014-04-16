@@ -15,3 +15,6 @@ define('DESTINATION','/home/bumfank/scanner-projects');
 
 //LIST OF FILES THAT CAN BE SCANNED
 define('FILE_TYPES',json_encode(array('php','module','install')));
+
+//DEFINE PHP CLI PATH
+define('PHP','/usr/bin/php');

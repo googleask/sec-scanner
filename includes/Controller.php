@@ -1,9 +1,8 @@
 <?php
-include_once('config/config.php');
-include_once('Db.php');
-include_once('Views.php');
-include_once('Files.php');
-include_once('Scanner.php');
+include_once(realpath(dirname(__FILE__)).'/Db.php');
+include_once(realpath(dirname(__FILE__)).'/Views.php');
+include_once(realpath(dirname(__FILE__)).'/Files.php');
+include_once(realpath(dirname(__FILE__)).'/Scanner.php');
 
 Class Controller {
 
