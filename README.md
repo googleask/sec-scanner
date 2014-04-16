@@ -3,10 +3,9 @@ sec-scanner
 
 ## Security Code Scanner
 Security Code Scanner is an application for help developers to make a security code review.<br>
-You have to upload your project archive ( zip / tar / rar ), after scanner (based on regular expression) try to find potential vulnerabilities.<br>
-After you will get good look report of all founded potential vulnerabilities ;-)<br><br>
+You have to upload your project archive ( zip / tar / rar ), scanner (based on regular expression) try to find potential vulnerabilities. After you will get good look report of all founded potential vulnerabilities ;-)<br><br>
 **REMEMBER!** Scanner is as good as the good are your regular expression. So don't use only my regexp, try to make your own. Good tool: [https://www.debuggex.com/](https://www.debuggex.com/)
-If you want, you can send to me your regexp and we will put it into repository
+If you want, you can send to me your regexp and I will put it into repository
 # Requirements
 1. PHP CLI
 2. Rar for PHP: [http://pecl.php.net/package/rar](http://pecl.php.net/package/rar)
