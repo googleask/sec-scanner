@@ -6,17 +6,7 @@
  * Jah Bless
  */
 
-include_once('includes/Controller.php');
+require_once(realpath(dirname(__FILE__)).'/includes/Router.php');
 //Init controller
-$controller = new Controller();
-
-// Get variables for controller
-$method = isset($_GET['method']) ? htmlspecialchars($_GET['method'], ENT_QUOTES) : array();
-$action = isset($_GET['action']) ? htmlspecialchars($_GET['action'], ENT_QUOTES) : array();
-// Print all!
-if (is_callable(array($controller, $method))) {
-  print $controller->$method($action);
-}
-else {
-  print $controller->index();
-}
+$router = new Router($_GET['method'],$_GET['action']);
+$router->call();
