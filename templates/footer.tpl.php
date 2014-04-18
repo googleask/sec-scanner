@@ -15,7 +15,7 @@
   </div>
 </div>
 <div id="copyright">
-  <p>Sec - Scanner - MIT Licence 2014 by Jarosław Kamiński</p>
+  <p>Sec - Scanner - MIT Licence 2014 by Jarosław Kamiński - Thanks for: <a href="http://www.freecsstemplates.org/">http://www.freecsstemplates.org/</a> for sharing so great template ;-)</p>
 </div>
 </body>
 </html>

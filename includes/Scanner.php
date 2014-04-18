@@ -1,6 +1,7 @@
 <?php
-include_once('Db.php');
-include_once('Files.php');
+include_once(realpath(dirname(__FILE__)).'/../config/config.php');
+include_once(realpath(dirname(__FILE__)).'/Db.php');
+include_once(realpath(dirname(__FILE__)).'/Files.php');
 
 Class Scanner {
 
@@ -25,7 +26,7 @@ Class Scanner {
     $view->set('class', 'scanner');
     print $view->render();
     set_time_limit(0);
-    $handle = popen("php scanner.php " . $this->project_id, "r");
+    $handle = popen(PHP." scanner.php " . $this->project_id, "r");
     if (ob_get_level() == 0) {
       ob_start();
     }

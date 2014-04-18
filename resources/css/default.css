@@ -694,3 +694,7 @@
   .center{
       text-align: center;
   }
+
+  .code .container, .syntaxhighlighter .gutter .line {
+      font-size: 12px !important;
+  }
